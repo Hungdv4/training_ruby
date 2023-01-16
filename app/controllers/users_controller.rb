@@ -57,6 +57,24 @@ class UsersController < ApplicationController
     end
   end
 
+  def sign_up
+    @sign_up = User.new
+  end
+
+  def create_sign_up
+    @sign_up = User.new(user_params)
+
+    respond_to do |format|
+      if @sign_up.save
+        format.html { redirect_to users_path, notice: "User was successfully created." }
+        format.json { render :show, status: :created, location: @sign_up }
+      else
+        format.html { render :sign_up, status: :unprocessable_entity }
+        format.json { render json: @sign_up.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
@@ -64,12 +82,13 @@ class UsersController < ApplicationController
     end
 
     # Only allow a list of trusted parameters through.
+    
     def user_params
-      params.require(:user).permit(:name, :email)
+      params.require(:user).permit(:name, :email, :password , :password_confirmation)
     end
 
-    def sign_up
+
+
     
-    end
 
 end

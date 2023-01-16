@@ -13,4 +13,5 @@ Rails.application.routes.draw do
   get '/contact', to:'static_pages#contact'
   get '/about', to:'static_pages#about'
   get '/sign-up', to: 'users#sign_up'
+  post '/sign-up', to: 'users#create_sign_up'
 end
