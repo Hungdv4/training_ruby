@@ -29,6 +29,9 @@ gem "jbuilder"
 
 gem 'bootstrap-sass', '~> 3.4', '>= 3.4.1'
 gem 'bcrypt', '~> 3.1', '>= 3.1.18'
+gem 'jquery-rails', '~> 4.5', '>= 4.5.1'
+gem 'bootstrap', '~> 5.1', '>= 5.1.3'
+gem 'autoprefixer-rails'
 
 
 # Use Redis adapter to run Action Cable in production
@@ -74,3 +77,7 @@ group :test do
   gem "selenium-webdriver"
   gem "webdrivers"
 end
+
+gem "cssbundling-rails", "~> 1.1"
+
+gem "jsbundling-rails", "~> 1.1"
