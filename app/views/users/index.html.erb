@@ -10,17 +10,10 @@
     </tr>
   </thead>
   <tbody>
-    <% @users.each do |user, index| %>
-      <tr>
-        <td><%= index %></td>
-        <td><%= user.name %></td>
-        <td><%= user.email %></td>
-        <td><%= link_to 'Show', user %></td>
-        <td><%= link_to 'Edit', edit_user_path(user) %></td>
-        <td><%= link_to 'Destroy', user, data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' }%></td>
-      </tr>
-    <% end %>
+    <%= render 'user'%>
   </tbody>
 </table>
+<%= will_paginate @clients, list_classes: %w(pagination justify-content-end) %>
+
 <br>
-<%= link_to 'New User', sign_up_path %>
+<%= link_to 'New User', new_user_path %>
