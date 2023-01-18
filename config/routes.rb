@@ -6,7 +6,14 @@ Rails.application.routes.draw do
   # root "articles#index"
 
   root 'static_pages#home'
-  resources :users
+  resources :users do
+    member do
+     get :show
+     post :show
+     delete :destroy
+    end
+  end
+
   resources :microposts
 
   get '/home', to:'static_pages#home'
