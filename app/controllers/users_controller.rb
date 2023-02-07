@@ -6,12 +6,14 @@ class UsersController < ApplicationController
 
   # GET /users or /users.json
   def index
-    @users = User.paginate(page: params[:page]).order('id DESC')
+    @users = User.where(activated: true).paginate(page: params[:page]).order("id DESC")
+    # @users = User.paginate(page: params[:page]).order("id DESC")
   end
 
   # GET /users/1 or /users/1.json
   def show
     @user = User.find(params[:id])
+    redirect_to root_url and return unless true
   end
 
   # GET /users/new
@@ -27,12 +29,13 @@ class UsersController < ApplicationController
   # POST /users or /users.json
   def create
     @user = User.new(user_params)
-      if @user.save
-        login @user
-        flash[:success] = "Welcome to the Sample App!"
-        redirect_to users_path
-      else
-        render :new, status: :unprocessable_entity
+    if @user.save
+      # @user.send_activation_email
+      # login @user
+      flash[:info] = "Please check your email to activate your account."
+      redirect_to users_path
+    else
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -62,42 +65,43 @@ class UsersController < ApplicationController
 
   def create_sign_up
     @user = User.new(user_params)
-      if @user.save
-        login @user
-        flash[:success] = "User was successfully created."
-        redirect_to users_path
-      else
-        render :new, status: :unprocessable_entity
+    if @user.save
+      @user.send_activation_email
+      login @user
+      flash[:info] = "Please check your email to activate your account."
+      redirect_to root_url
+    else
+      render :new, status: :unprocessable_entity
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_user
-      @user = User.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    
-    def user_params
-      params.require(:user).permit(:name, :email, :password , :password_confirmation)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_user
+    @user = User.find(params[:id])
+  end
 
-    def logged_in_user
-      unless logged_in?
+  # Only allow a list of trusted parameters through.
+
+  def user_params
+    params.require(:user).permit(:name, :email, :password, :password_confirmation)
+  end
+
+  def logged_in_user
+    unless logged_in?
       store_location
       flash[:danger] = "Please log in."
       redirect_to login_url
-      end
     end
+  end
 
-    def correct_user
-      @user = User.find(params[:id])
-      redirect_to(root_url) unless current_user?(@user)
-    end
+  def correct_user
+    @user = User.find(params[:id])
+    redirect_to(root_url) unless current_user?(@user)
+  end
 
-    def admin_user
-      redirect_to(root_url) unless current_user.admin?
-    end
-
+  def admin_user
+    redirect_to(root_url) unless current_user.admin?
+  end
 end
