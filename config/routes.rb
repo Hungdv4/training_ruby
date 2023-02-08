@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  # get "password_resets/new"
+  # get "password_resets/edit"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")
@@ -22,4 +24,7 @@ Rails.application.routes.draw do
 
   # account activation
   resources :account_activations, only: [:edit]
+
+  # reset password
+  resources :password_resets, only: [:new, :create, :edit, :update]
 end
