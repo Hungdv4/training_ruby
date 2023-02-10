@@ -1,19 +1,9 @@
-<%= link_to "Micropost" ,  microposts_path %>
+<%= link_to "Micropost", microposts_path %>
 <p id="notice"><%= notice %></p>
-<table class="table">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Name</th>
-      <th scope="col">Email</th>
-      <th scope="col" colspan="3"></th>
-    </tr>
-  </thead>
-  <tbody>
-    <%= render 'user'%>
-  </tbody>
-</table>
+<ul class="users">
+<%= render "user" %>
+</ul>
 <%= will_paginate @clients, list_classes: %w(pagination justify-content-end) %>
 
 <br>
-<%= link_to 'New User', new_user_path %>
+<%= link_to "New User", new_user_path %>

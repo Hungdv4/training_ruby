@@ -7,7 +7,11 @@ Rails.application.routes.draw do
   # root "articles#index"
 
   root "static_pages#home"
-  resources :users
+  resources :users do
+    member do
+      get :following, :followers
+    end
+  end
   resources :microposts, only: [:index, :create, :destroy]
 
   # get "/home", to: "static_pages#home"
@@ -27,4 +31,6 @@ Rails.application.routes.draw do
 
   # reset password
   resources :password_resets, only: [:new, :create, :edit, :update]
+
+  resources :relationships, only: [:create, :destroy]
 end

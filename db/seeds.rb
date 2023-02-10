@@ -5,14 +5,19 @@
 #
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
-# User.create!(name: "Example User",
-#             email: "example@abc.vn",
-#             password: "hung123",
-#             password_confirmation: "hung123",
-#             admin: true)
+User.create!(name: "HungDV",
+             email: "hungdv@sabitech.vn",
+             password: "hungdv2712",
+             password_confirmation: "hungdv2712",
+             admin: true,
+             activation_digest: nil,
+             reset_digest: nil,
+             reset_sent_at: nil,
+             activated: true,
+             activated_at: Time.zone.now)
 
-10.times do |n|
-  name = "Example#{n +1}"
+20.times do |n|
+  name = Faker::Name.name
   email = "example-#{n + 1}@abc.vn"
   password = "password"
   User.create!(name: name,
@@ -26,3 +31,11 @@
                activated: true,
                activated_at: Time.zone.now)
 end
+
+# Create following relationships.
+users = User.all
+user = users.first
+following = users[2..3]
+followers = users[3..20]
+following.each { |followed| user.follow(followed) }
+followers.each { |follower| follower.follow(user) }
